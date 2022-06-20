@@ -48,8 +48,15 @@ router.post('/posts', async function (req, res) {
 	res.redirect('/posts');
 });
 
-router.get('/posts/:id', async function (req, res) {
+router.get('/posts/:id', async function (req, res, next) {
 	const postId = req.params.id;
+
+	try {
+		postId = new ObjectId(postId);
+	} catch (error) {
+		return next(error);
+	}
+
 	const post = await db
 		.getDb()
 		.collection('posts')
@@ -57,6 +64,7 @@ router.get('/posts/:id', async function (req, res) {
 
 	if (!post) {
 		return res.status(404).render('404');
+		// return res.status(404).render('404');
 	}
 
 	post.humanReadableDate = post.date.toLocaleDateString('en-US', {
