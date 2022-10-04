@@ -4,19 +4,19 @@ const MongoClient = mongodb.MongoClient;
 
 let database;
 
-async function connectToDatabase() {
+async function connect() {
 	const client = await MongoClient.connect('mongodb://127.0.0.1:27017');
-	database = client.db('auth-demo');
+	database = client.db('blog');
 }
 
 function getDb() {
 	if (!database) {
-		throw { message: 'You must connect first!' };
+		throw { message: 'Database connection not established!' };
 	}
 	return database;
 }
 
 module.exports = {
-	connectToDatabase: connectToDatabase,
+	connectToDatabase: connect,
 	getDb: getDb
 };
