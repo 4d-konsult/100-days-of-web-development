@@ -28,7 +28,10 @@ app.use(
 		secret: 'super-secret',
 		resave: false,
 		saveUninitialized: false,
-		store: sessionStorage
+		store: sessionStorage,
+		cookie: {
+			maxAge: 60 * 60 * 1000 //maxAge is in milliseconds
+		}
 	})
 );
 
